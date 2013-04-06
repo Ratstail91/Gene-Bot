@@ -1,0 +1,37 @@
+What do I need?
+
+drawing routines
+
+Bots:
+	base & modifier stats
+
+Waypoints:
+	A way to place them, connect them, and to make  the bots use them
+
+-------------------------
+
+Skills Grid (Genome):
+
+            |Active     |Pasive	    |Modifier
+------------------------------------------------
+Combat      |Attack     |Defence    |Shape
+Reach       |Speed      |Range      |Size
+Durability  |Evasion    |Hit Points |Colour
+
+
+Base Stats:
+	Attack - attack value
+	Defence - defence value
+	Speed - distance it is possible to cover in a single turn
+	Range - distance a single attack can be made at
+	Evasion - Chance of reducing damage to 0
+	Hit Points - physical amount of damage a bot can take before being destroyed
+
+Modifier Stats:
+	Shape
+	Size
+	Durability
+
+Modifier stats are applied as madnitutes of ratios to their respective values, as well as being visual cues to the player. The ratios are something like this:
+
+TODO
