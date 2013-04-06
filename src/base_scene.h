@@ -5,13 +5,10 @@
 
 class BaseScene {
 public:
+	//outermost function calls
 	BaseScene();
 	virtual ~BaseScene() {}
-
-	//outermost function calls
-	virtual void Setup() {};
 	virtual void RunFrame();
-	virtual void Cleanup() {};
 
 	//run frame
 	virtual void BeginLoop() {};

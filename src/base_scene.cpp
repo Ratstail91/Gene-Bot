@@ -1,10 +1,10 @@
 #include "base_scene.h"
 
+//outermost function calls
 BaseScene::BaseScene() {
 	strategy = 0;
 }
 
-//outermost function calls
 void BaseScene::RunFrame() {
 	BeginLoop();
 	HandleEvents();
