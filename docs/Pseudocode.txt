@@ -32,6 +32,15 @@ Modifier Stats:
 	Size
 	Durability
 
-Modifier stats are applied as madnitutes of ratios to their respective values, as well as being visual cues to the player. The ratios are something like this:
+Modifier stats are applied as madnitutes of ratios to their respective values,
+as well as being visual cues to the player. The ratios are something like this:
 
-TODO
+**TODO
+
+-------------------------
+
+breakdown:
+
+speed: units of movement per turn
+range: distance maximum distance of attack per turn
+damage = attack > defence + evasion/2 ? attack - defence + defence/2 : attack / 2
