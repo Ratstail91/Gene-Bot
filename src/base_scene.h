@@ -1,8 +1,6 @@
 #ifndef BASESCENE_H_
 #define BASESCENE_H_
 
-#include "strategy_list.h"
-
 #include "SDL/SDL.h"
 
 class BaseScene {

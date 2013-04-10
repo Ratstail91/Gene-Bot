@@ -1,5 +1,7 @@
 #include "base_scene.h"
 
+#include "strategy_list.h"
+
 //outermost function calls
 BaseScene::BaseScene() {
 	strategy = CONTINUE;
