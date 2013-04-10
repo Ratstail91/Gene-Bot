@@ -23,7 +23,7 @@ public:
 
 	//handle points
 	int NewPoint(int x, int y);
-	int GetNearestPoint(int mouseX, int mouseY, int maxRadius = 0);
+	Point* GetNearestPoint(int mouseX, int mouseY, int maxRadius = 0);
 	void DeleteNearestPoint(int mouseX, int mouseY, int maxRadius = 0);
 
 	PointList* GetPointList();
@@ -37,6 +37,11 @@ public:
 
 	int GetIndexCounter();
 private:
+	//utilities
+	float Distance(float x1, float y1, float x2, float y2);
+	float DistanceSquared(float x1, float y1, float x2, float y2);
+	PointList::iterator GetNearestPointIterator(int mouseX, int mouseY, int maxRadius);
+
 	int indexCounter;
 	PointList pointList;
 	PathList pathList;
