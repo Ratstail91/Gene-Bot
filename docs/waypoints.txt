@@ -1,0 +1,13 @@
+Point:
+	x, y, index
+
+Path:
+	point1, point2, length
+
+WaypointManager:
+	pointList
+	pathList
+
+	place, select (with a margin of error), and delete points
+	place, select (using the end points), and delete paths
+	draw everything (done outside the class)
