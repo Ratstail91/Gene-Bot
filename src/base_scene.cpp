@@ -2,7 +2,7 @@
 
 //outermost function calls
 BaseScene::BaseScene() {
-	strategy = 0;
+	strategy = CONTINUE;
 }
 
 void BaseScene::RunFrame() {

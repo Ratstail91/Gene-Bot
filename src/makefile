@@ -1,8 +1,8 @@
 CXXFLAGS+=-std=c++0x
 DFLAGS=-DDEBUG
-LIB=-lmingw32 -lSDL_gfx -lSDLmain -lSDL
-OBJ=error.o base_scene.o
-SRC=test_scene.cpp main.cpp
+LIB=-lmingw32 -lSDLmain -lSDL
+OBJ=
+SRC=base_scene.cpp error.cpp main.cpp scene.cpp scene_manager.cpp 
 
 all: debug
 
@@ -13,4 +13,4 @@ debug: $(OBJ)
 	$(CXX) $(CXXFLAGS) $(DFLAGS) $(SRC) $(OBJ) $(LIB)
 
 clean:
-	-$(RM) *.o *.exe
+	-$(RM) *.o *.a *.exe

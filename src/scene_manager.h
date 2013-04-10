@@ -7,22 +7,22 @@
 
 class SceneManager {
 public:
-	//outermost function calls
+	//outermost functions
+	void Init();
+	void Loop();
+	void Quit();
+	//screen hooks
+	SDL_Surface* SetScreen(int w, int h, int bpp, Uint32 flags);
+	SDL_Surface* GetScreen() const;
+	//singleton hooks
+	static SceneManager* GetSingleton();
+private:
 	SceneManager();
 	virtual ~SceneManager();
-
-	void Run();
-
-	//screen hooks
-	SDL_Surface* SetScreen(SDL_Surface* p) {
-		return screen = p;
-	}
-	SDL_Surface* GetScreen() {
-		return screen;
-	}
-private:
-	BaseScene* activeScene;
+	void LoadScene(int);
+	void UnloadScene();
 	SDL_Surface* screen;
+	BaseScene* scenePtr;
 };
 
 #endif
