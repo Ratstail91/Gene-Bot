@@ -12,6 +12,7 @@ void BaseScene::RunFrame() {
 	HandleEvents();
 	UpdateObjects();
 	Render();
+	SDL_Flip(screen);
 	EndLoop();
 }
 
