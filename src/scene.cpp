@@ -16,7 +16,7 @@ void Scene::UpdateObjects() {
 }
 
 void Scene::Render() {
-	SDL_Flip(GetScreen());
+	//
 }
 
 //events

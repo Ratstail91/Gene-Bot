@@ -6,6 +6,7 @@ enum StrategyList {
 	CONTINUE,
 	FIRST,
 	SCENE,
+	TESTSYSTEMS,
 };
 
 #endif

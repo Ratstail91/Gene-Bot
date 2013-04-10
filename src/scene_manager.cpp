@@ -6,6 +6,7 @@
 #include "strategy_list.h"
 
 #include "scene.h"
+#include "test_systems.h"
 
 SceneManager::SceneManager() {
 	screen = nullptr;
@@ -68,6 +69,9 @@ void SceneManager::LoadScene(int index) {
 	UnloadScene();
 	switch(index) {
 		case FIRST:
+		case TESTSYSTEMS:
+			scenePtr = new TestSystems();
+		break;
 		case SCENE:
 			scenePtr = new Scene();
 		break;
