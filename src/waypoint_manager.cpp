@@ -1,6 +1,6 @@
 #include "waypoint_manager.h"
 
-#include <cmath>
+#include "math_utilities.h"
 
 WaypointManager::WaypointManager() {
 	indexCounter = 0;
@@ -25,7 +25,10 @@ Point* WaypointManager::GetNearestPoint(int mouseX, int mouseY, int maxRadius) {
 }
 
 void WaypointManager::DeleteNearestPoint(int mouseX, int mouseY, int maxRadius) {
-	pointList.erase(GetNearestPointIterator(mouseX, mouseY, maxRadius));
+	PointList::iterator it = GetNearestPointIterator(mouseX, mouseY, maxRadius);
+	if (it != pointList.end()) {
+		pointList.erase(it);
+	}
 }
 
 PointList::iterator WaypointManager::GetNearestPointIterator(int mouseX, int mouseY, int maxRadius) {
@@ -46,7 +49,7 @@ PointList::iterator WaypointManager::GetNearestPointIterator(int mouseX, int mou
 		}
 	}
 
-	if (maxRadius == 0 || thisDist <= maxRadius) {
+	if (maxRadius == 0 || thisDist <= maxRadius*maxRadius) {
 		return nearest;
 	}
 	return pointList.end();
@@ -75,15 +78,4 @@ PathList* WaypointManager::GetPathList() {
 
 int WaypointManager::GetIndexCounter() {
 	return indexCounter;
-}
-
-//utilities
-#define Squared(x) ((x)*(x))
-
-float WaypointManager::Distance(float x1, float y1, float x2, float y2) {
-	return sqrt(Squared(x2 - x1) + Squared(y2 - y1));
-}
-
-float WaypointManager::DistanceSquared(float x1, float y1, float x2, float y2) {
-	return Squared(x2 - x1) + Squared(y2 - y1);
 }

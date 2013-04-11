@@ -3,6 +3,8 @@
 
 #include "base_scene.h"
 
+#include "waypoint_manager.h"
+
 #include "SDL/SDL.h"
 
 class TestSystems : public BaseScene {
@@ -20,6 +22,9 @@ protected:
 	virtual void MouseButtonUp(SDL_Event&);
 	virtual void KeyDown(SDL_Event&);
 	virtual void KeyUp(SDL_Event&);
+	//things being tested
+	void TestFunction(int x, int y);
+	WaypointManager waypointMgr;
 };
 
 #endif

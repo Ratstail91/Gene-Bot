@@ -1,8 +1,8 @@
 CXXFLAGS+=-std=c++0x
 DFLAGS=-DDEBUG
-LIB=-lmingw32 -lSDLmain -lSDL
-OBJ=error.o base_scene.o main.o
-SRC=scene.cpp test_systems.cpp scene_manager.cpp
+LIB=-lmingw32 -lSDL_gfx -lSDLmain -lSDL
+OBJ=error.o base_scene.o scene.o scene_manager.o main.o
+SRC=test_systems.cpp waypoint_manager.cpp
 
 all: debug
 

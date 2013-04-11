@@ -36,10 +36,8 @@ public:
 	PathList* GetPathList();
 
 	int GetIndexCounter();
-private:
+public: //TODO
 	//utilities
-	float Distance(float x1, float y1, float x2, float y2);
-	float DistanceSquared(float x1, float y1, float x2, float y2);
 	PointList::iterator GetNearestPointIterator(int mouseX, int mouseY, int maxRadius);
 
 	int indexCounter;

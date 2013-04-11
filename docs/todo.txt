@@ -1,0 +1,1 @@
+Find a way to exclude points from the search algorithm.
