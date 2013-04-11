@@ -75,10 +75,10 @@ void TestSystems::KeyUp(SDL_Event& event) {
 
 void TestSystems::TestFunction(int x, int y) {
 //	PointList::iterator it = waypointMgr.GetNearestPointIterator(x,y,500);
-	PointList::iterator it = waypointMgr.GetNearestPointIterator(x,y,64);
+//	PointList::iterator it = waypointMgr.GetNearestPointIterator(x,y,64);
 
-	if (it == waypointMgr.GetPointList()->end()) {
-		cout << "attempting to erase point " << it->index << endl;
-		waypointMgr.GetPointList()->erase(it);
-	}
+//	if (it == waypointMgr.GetPointList()->end()) {
+//		cout << "attempting to erase point " << it->index << endl;
+//		waypointMgr.GetPointList()->erase(it);
+//	}
 }

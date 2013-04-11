@@ -36,7 +36,7 @@ public:
 	PathList* GetPathList();
 
 	int GetIndexCounter();
-public: //TODO
+private:
 	//utilities
 	PointList::iterator GetNearestPointIterator(int mouseX, int mouseY, int maxRadius);
 
