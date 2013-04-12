@@ -11,24 +11,42 @@ WaypointManager::~WaypointManager() {
 }
 
 //handle points
-int WaypointManager::NewPoint(int x, int y) {
+Point* WaypointManager::NewPoint(int x, int y) {
 	Point p = {++indexCounter, x, y};
 	pointList.push_back(p);
+	return &pointList.back();
 }
 
 Point* WaypointManager::GetNearestPoint(int mouseX, int mouseY, int maxRadius) {
-	PointList::iterator it = GetNearestPointIterator(mouseX, mouseY, maxRadius);
-	if (it == pointList.end()) {
+	PointList::iterator nearest = GetNearestPointIterator(mouseX, mouseY, maxRadius);
+	if (nearest == pointList.end()) {
 		return nullptr;
 	}
-	return &(*it);
+	return &(*nearest);
 }
 
 void WaypointManager::DeleteNearestPoint(int mouseX, int mouseY, int maxRadius) {
-	PointList::iterator it = GetNearestPointIterator(mouseX, mouseY, maxRadius);
-	if (it != pointList.end()) {
-		pointList.erase(it);
+	PointList::iterator nearest = GetNearestPointIterator(mouseX, mouseY, maxRadius);
+	if (nearest == pointList.end()) {
+		return;
 	}
+	/* Remove all paths attached to this point
+	 * This took a lot of work, and the odd way of going about it is caused by
+	 * PathList::erase() invalidating the iterator. Resetting it to the start 
+	 * is inefficient, but it works for now.
+	*/
+	PathList::iterator pathIt = pathList.begin();
+	while(pathIt != pathList.end()) {
+		if (pathIt->one == &(*nearest) || pathIt->two == &(*nearest)) {
+			pathList.erase(pathIt);
+			pathIt = pathList.begin();
+		}
+		else {
+			pathIt++;
+		}
+	}
+	//remove the point
+	pointList.erase(nearest);
 }
 
 PointList::iterator WaypointManager::GetNearestPointIterator(int mouseX, int mouseY, int maxRadius) {
@@ -60,8 +78,9 @@ PointList* WaypointManager::GetPointList() {
 }
 
 //handle paths
-void WaypointManager::NewPath(int pointOne, int pointTwo) {
-	//
+void WaypointManager::NewPath(Point* pointOne, Point* pointTwo) {
+	Path p = {++indexCounter, pointOne, pointTwo, (int)Distance(pointOne->x, pointOne->y, pointTwo->x, pointTwo->y)};
+	pathList.push_back(p);
 }
 
 Path* WaypointManager::GetPath(int pointOne, int pointTwo) {

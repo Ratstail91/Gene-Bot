@@ -9,7 +9,8 @@ struct Point {
 };
 
 struct Path {
-	int pointOne, pointTwo;
+	int index;
+	Point *one, *two;
 	int length;
 };
 
@@ -22,14 +23,14 @@ public:
 	~WaypointManager();
 
 	//handle points
-	int NewPoint(int x, int y);
+	Point* NewPoint(int x, int y);
 	Point* GetNearestPoint(int mouseX, int mouseY, int maxRadius = 0);
 	void DeleteNearestPoint(int mouseX, int mouseY, int maxRadius = 0);
 
 	PointList* GetPointList();
 
 	//handle paths
-	void NewPath(int pointOne, int pointTwo);
+	void NewPath(Point* pointOne, Point* pointTwo);
 	Path* GetPath(int pointOne, int pointTwo);
 	void DeletePath(int pointOne, int pointTwo);
 
