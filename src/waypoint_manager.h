@@ -9,7 +9,6 @@ struct Point {
 };
 
 struct Path {
-	int index;
 	Point *one, *two;
 	int length;
 };
@@ -31,8 +30,8 @@ public:
 
 	//handle paths
 	void NewPath(Point* pointOne, Point* pointTwo);
-	Path* GetPath(int pointOne, int pointTwo);
-	void DeletePath(int pointOne, int pointTwo);
+	Path* GetPath(Point* pointOne, Point* pointTwo);
+	void DeletePath(Point* pointOne, Point* pointTwo);
 
 	PathList* GetPathList();
 
@@ -40,6 +39,7 @@ public:
 private:
 	//utilities
 	PointList::iterator GetNearestPointIterator(int mouseX, int mouseY, int maxRadius);
+	//GetPathIter()
 
 	int indexCounter;
 	PointList pointList;

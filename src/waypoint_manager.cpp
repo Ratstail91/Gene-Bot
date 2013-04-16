@@ -59,7 +59,7 @@ PointList::iterator WaypointManager::GetNearestPointIterator(int mouseX, int mou
 	float thisDist = DistanceSquared(mouseX, mouseY, nearest->x, nearest->y);
 	float nextDist = 0.0f;
 
-	for (PointList::iterator it = pointList.begin(); it != pointList.end(); it++) {
+	for (PointList::iterator it = ++pointList.begin(); it != pointList.end(); it++) {
 		nextDist = DistanceSquared(mouseX, mouseY, it->x, it->y);
 		if (nextDist < thisDist) {
 			thisDist = nextDist;
@@ -73,22 +73,42 @@ PointList::iterator WaypointManager::GetNearestPointIterator(int mouseX, int mou
 	return pointList.end();
 }
 
+
 PointList* WaypointManager::GetPointList() {
 	return &pointList;
 }
 
 //handle paths
 void WaypointManager::NewPath(Point* pointOne, Point* pointTwo) {
-	Path p = {++indexCounter, pointOne, pointTwo, (int)Distance(pointOne->x, pointOne->y, pointTwo->x, pointTwo->y)};
+	if (GetPath(pointOne, pointTwo) != nullptr) {
+		return;
+	}
+	Path p = {pointOne, pointTwo, (int)Distance(pointOne->x, pointOne->y, pointTwo->x, pointTwo->y)};
 	pathList.push_back(p);
 }
 
-Path* WaypointManager::GetPath(int pointOne, int pointTwo) {
-	//
+Path* WaypointManager::GetPath(Point* pointOne, Point* pointTwo) {
+	for (PathList::iterator it = pathList.begin(); it != pathList.end(); it++) {
+		if ((it->one == pointOne && it->two == pointTwo) ||
+			(it->one == pointTwo && it->two == pointOne)) {
+			return &(*it);
+		}
+	}
+	return nullptr;
 }
 
-void WaypointManager::DeletePath(int pointOne, int pointTwo) {
-	//
+void WaypointManager::DeletePath(Point* pointOne, Point* pointTwo) {
+	PathList::iterator it = pathList.begin();
+	while(it != pathList.end()) {
+		if ((it->one == pointOne && it->two == pointTwo) ||
+			(it->one == pointTwo && it->two == pointOne))
+		{
+			pathList.erase(it);
+			it = pathList.begin();
+			continue;
+		}
+		it++;
+	}
 }
 
 PathList* WaypointManager::GetPathList() {

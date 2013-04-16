@@ -3,6 +3,7 @@
 
 #include "base_scene.h"
 
+#include "keyboard_state.h"
 #include "waypoint_manager.h"
 
 #include "SDL/SDL.h"
@@ -25,6 +26,9 @@ protected:
 	//things being tested
 	void TestFunction(int x, int y);
 	WaypointManager waypointMgr;
+	Point *pointOne, *pointTwo;
+
+	KeyboardState ks;
 };
 
 #endif
