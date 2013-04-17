@@ -1,9 +1,11 @@
 What do I need?
 
-drawing routines
+drawing routines (SDL_gfx)
 
 Bots:
 	base & modifier stats
+	movement systems
+	AI systems
 
 Waypoints:
 	A way to place them, connect them, and to make  the bots use them
@@ -32,15 +34,33 @@ Modifier Stats:
 	Size
 	Durability
 
-Modifier stats are applied as madnitutes of ratios to their respective values,
-as well as being visual cues to the player. The ratios are something like this:
+Modifier stats are applied as madnitutes of ratios to their respective values, as well as being visual cues to the player. The ratios are something like this:
 
 **TODO
 
+visual cues:
+
+Shapes: circle, triangle, square(baseline), pentagon, hexagon
+sizes: 5 sizes, centered around a baseline
+color: Red, yellow, white(baseline), green, blue
+
+These can change, but the colours must at least contrast agaisnt the rest of the game. The modifiers don't have specific values assigned to a certain trait; the visual cues only give hints to the player.
+
+Waypoints can become hollow if they can be used.
+
 -------------------------
 
-breakdown:
+Combat Damage Equasion:
 
-speed: units of movement per turn
-range: distance maximum distance of attack per turn
-damage = attack > defence + evasion/2 ? attack - defence + defence/2 : attack / 2
+x = max(0, (A>E) ? A-D+(A*0.6) : A*0.4)
+
+(A) Enemy's Attack
+(D) Defence
+(E) Evasion
+(X) Damage
+
+-------------------------
+
+Breeding:
+
+Two bots must be near each other (within a radius) to breed. Once this option is selected, a bot is created, and placed within a (larger) radius of one of the parents.

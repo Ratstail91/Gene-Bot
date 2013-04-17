@@ -1,1 +1,2 @@
 Find a way to exclude points from the search algorithm.
+Fill out the wiki on github, that'd be better for documentation.
