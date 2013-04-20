@@ -3,6 +3,7 @@
 
 #include "base_scene.h"
 
+#include "camera.h"
 #include "keyboard_state.h"
 #include "waypoint_manager.h"
 
@@ -28,6 +29,7 @@ protected:
 	WaypointManager waypointMgr;
 	Point *pointOne, *pointTwo;
 
+	Camera cam;
 	KeyboardState ks;
 };
 
