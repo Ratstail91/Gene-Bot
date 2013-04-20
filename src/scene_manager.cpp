@@ -1,12 +1,12 @@
 #include "scene_manager.h"
 
-#include "error.h"
-
 //these are the scenes used in the scene strategy
 #include "strategy_list.h"
 
 #include "scene.h"
 #include "test_systems.h"
+
+#include <stdexcept>
 
 SceneManager::SceneManager() {
 	screen = nullptr;
@@ -20,7 +20,7 @@ SceneManager::~SceneManager() {
 //outermost functions
 void SceneManager::Init() {
 	if (SDL_Init(SDL_INIT_VIDEO)) {
-		throw(RuntimeError("Failed to initialize SDL"));
+		throw(std::runtime_error("Failed to initialize SDL"));
 	}
 	SetScreen(800, 600, 32, SDL_HWSURFACE|SDL_DOUBLEBUF);
 }
@@ -46,7 +46,7 @@ SDL_Surface* SceneManager::SetScreen(int w, int h, int bpp, Uint32 flags) {
 	//use simplest and fastest option for now; assume windows or linux platforms
 	screen = SDL_SetVideoMode(w, h, bpp, flags);
 	if (!screen) {
-		throw(RuntimeError("Failed to create the screen surface"));
+		throw(std::runtime_error("Failed to create the screen surface"));
 	}
 	//kind of bloated, but a convinience for SDL 1.2
 	if (scenePtr) {
@@ -77,9 +77,9 @@ void SceneManager::LoadScene(int index) {
 		break;
 		case QUIT:
 		case CONTINUE:
-			throw(LogicError("Reserved scene values accessed"));
+			throw(std::logic_error("Reserved scene values accessed"));
 		default:
-			throw(LogicError("Unknown scene value received"));
+			throw(std::logic_error("Unknown scene value received"));
 	}
 	scenePtr->SetScreen(screen);
 }

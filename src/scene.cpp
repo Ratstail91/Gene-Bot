@@ -1,5 +1,5 @@
 #include "scene.h"
-#include "error.h"
+
 #include "strategy_list.h"
 
 Scene::Scene() {

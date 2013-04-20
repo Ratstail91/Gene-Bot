@@ -1,9 +1,11 @@
-#include "error.h"
 #include "scene_manager.h"
 
 #include "SDL/SDL.h"
 
+#include <exception>
 #include <iostream>
+
+using namespace std;
 
 int SDL_main(int, char**) {
 	SceneManager* ptr = SceneManager::GetSingleton();
@@ -12,8 +14,8 @@ int SDL_main(int, char**) {
 		ptr->Loop();
 		ptr->Quit();
 	}
-	catch(Error& e) {
-		std::cerr << "Fatal " << e.GetError() << std::endl;
+	catch(exception& e) {
+		cerr << "Fatal Error: " << e.what() << endl;
 		return 1;
 	}
 	return 0;

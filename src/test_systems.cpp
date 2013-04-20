@@ -1,10 +1,11 @@
 #include "test_systems.h"
-#include "error.h"
 #include "strategy_list.h"
 
 #include "SDL_gfx/SDL_gfxPrimitives.h"
 
+#include <stdexcept>
 #include <iostream>
+
 using namespace std;
 
 TestSystems::TestSystems() {
