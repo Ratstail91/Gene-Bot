@@ -12,6 +12,7 @@ TestSystems::TestSystems() {
 
 	pointOne = pointTwo = nullptr;
 
+#ifdef DEBUG
 	Point* p1 = waypointMgr.NewPoint(32, 32);
 	Point* p2 = waypointMgr.NewPoint(64, 64);
 	Point* p3 = waypointMgr.NewPoint(128, 128);
@@ -26,6 +27,7 @@ TestSystems::TestSystems() {
 	waypointMgr.NewPath(p6, p5);
 	waypointMgr.NewPath(p5, p3);
 	waypointMgr.NewPath(p4, p5);
+#endif
 }
 
 TestSystems::~TestSystems() {
