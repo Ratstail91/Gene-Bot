@@ -2,6 +2,12 @@
 
 Camera::Camera() {
 	ResetScale();
+	w = h = 0;
+}
+
+void Camera::SetScreenSize(int _w, int _h) {
+	w = _w;
+	h = _h;
 }
 
 double Camera::SetScale(double d) {

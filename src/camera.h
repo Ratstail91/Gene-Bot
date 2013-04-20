@@ -7,6 +7,8 @@ class Camera {
 public:
 	Camera();
 
+	void SetScreenSize(int w, int h);
+
 	double SetScale(double d);
 	double ShiftScale(double d);
 	double GetScale() const;
@@ -17,6 +19,7 @@ public:
 	Vector2 GetPosition() const;
 	Vector2 GetCamPosition();
 private:
+	int w, h;
 	Vector2 position;
 	double scale;
 };

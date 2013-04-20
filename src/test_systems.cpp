@@ -13,6 +13,8 @@ TestSystems::TestSystems() {
 
 	pointOne = pointTwo = nullptr;
 
+	cam.SetScreenSize(GetScreen()->w, GetScreen()->h);
+
 #ifdef DEBUG
 	Point* p1 = waypointMgr.NewPoint(32, 32);
 	Point* p2 = waypointMgr.NewPoint(64, 64);
@@ -37,14 +39,15 @@ TestSystems::~TestSystems() {
 
 //frame loop
 void TestSystems::UpdateObjects() {
-	//
+	cout << cam.GetPosition().x << "\t" << cam.GetPosition().y << endl;
 }
 
 void TestSystems::Render() {
 	SDL_FillRect(GetScreen(), nullptr, 0);
+	Vector2 v = cam.GetCamPosition();
 	//paths & points
 	for (auto it : *waypointMgr.GetPathList()) {
-		lineRGBA(GetScreen(), it.one->x, it.one->y, it.two->x, it.two->y, 0, 0, 255, 255);
+		lineRGBA(GetScreen(), it.one->x+v.x, it.one->y+v.y, it.two->x+v.x, it.two->y+v.y, 0, 0, 255, 255);
 	}
 	for (auto it : *waypointMgr.GetPointList()) {
 		circleRGBA(GetScreen(), it.x, it.y, 4, 255, 0, 0, 255);
@@ -71,7 +74,28 @@ void TestSystems::QuitEvent(SDL_Event& event) {
 }
 
 void TestSystems::MouseMotion(SDL_Event& event) {
-	//
+	if (event.motion.state & SDL_BUTTON_LMASK) {
+		cam.ShiftPosition(Vector2(event.motion.xrel,event.motion.yrel));
+		return;
+	}
+	if (event.motion.state & SDL_BUTTON_WHEELDOWN) {
+		if (cam.GetScale() >= 6) {
+			cam.SetScale(6);
+		}
+		else {
+			cam.ShiftScale(1.2);
+		}
+		return;
+	}
+	if (event.motion.state & SDL_BUTTON_WHEELUP) {
+		if (cam.GetScale() <= 1) {
+			cam.SetScale(1);
+		}
+		else {
+			cam.ShiftScale(0.8);
+		}
+		return;
+	}
 }
 
 void TestSystems::MouseButtonDown(SDL_Event& event) {
