@@ -14,3 +14,6 @@ debug: $(OBJ)
 
 clean:
 	-$(RM) *.o *.a *.exe
+
+unit:
+	$(CXX) $(CXXFLAGS) unit.cpp error.cpp
