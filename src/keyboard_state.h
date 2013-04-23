@@ -15,10 +15,10 @@
 class KeyboardState {
 public:
 	KeyboardState();
-	void KeyDown(SDLKey&);
-	void KeyUp(SDLKey&);
+	void KeyDown(SDLKey const&);
+	void KeyUp(SDLKey const&);
 
-	bool operator[](SDLKey);
+	bool operator[](SDLKey const&) const;
 private:
 	bool keys[SDLK_LAST];
 };

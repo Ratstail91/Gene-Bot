@@ -1,6 +1,8 @@
 ## Card Database
 
-Gene Bot
+Gene Bot is a turn-based tactical strategy game where you control and breed your gene bots to defeat opponents.
+
+Gene Bot is currently in pre-alpha.
 
 ## Copyright
 
