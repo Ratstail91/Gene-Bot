@@ -1,5 +1,5 @@
 #include "test_systems.h"
-#include "strategy_list.h"
+#include "scene_list.h"
 
 #include "SDL_gfx/SDL_gfxPrimitives.h"
 
@@ -36,83 +36,79 @@ TestSystems::~TestSystems() {
 }
 
 //frame loop
-void TestSystems::UpdateObjects() {
+void TestSystems::Update() {
 	//
 }
 
-void TestSystems::Render() {
-	SDL_FillRect(GetScreen(), nullptr, 0);
+void TestSystems::Render(SDL_Surface* const screen) {
+	SDL_FillRect(screen, nullptr, 0);
 	//paths & points
 	for (auto it : *waypointMgr.GetPathList()) {
-		lineRGBA(GetScreen(), it.one->x, it.one->y, it.two->x, it.two->y, 0, 0, 255, 255);
+		lineRGBA(screen, it.one->x, it.one->y, it.two->x, it.two->y, 0, 0, 255, 255);
 	}
 	for (auto it : *waypointMgr.GetPointList()) {
-		circleRGBA(GetScreen(), it.x, it.y, 4, 255, 0, 0, 255);
+		circleRGBA(screen, it.x, it.y, 4, 255, 0, 0, 255);
 	}
 	//nearest point to the mouse
 	int x, y;
 	SDL_GetMouseState(&x, &y);
 	Point* nearest = waypointMgr.GetNearestPoint(x, y);
 	if (nearest != nullptr) {
-		circleRGBA(GetScreen(), nearest->x, nearest->y, 8, 255, 0, 255, 255);
+		circleRGBA(screen, nearest->x, nearest->y, 8, 255, 0, 255, 255);
 	}
 	//selected points
 	if (pointOne != nullptr) {
-		circleRGBA(GetScreen(), pointOne->x, pointOne->y, 8, 0, 255, 0, 255);
+		circleRGBA(screen, pointOne->x, pointOne->y, 8, 0, 255, 0, 255);
 	}
 	if (pointTwo != nullptr) {
-		circleRGBA(GetScreen(), pointTwo->x, pointTwo->y, 8, 2, 255, 0, 255);
+		circleRGBA(screen, pointTwo->x, pointTwo->y, 8, 2, 255, 0, 255);
 	}
 }
 
 //events
-void TestSystems::QuitEvent(SDL_Event& event) {
-	SetStrategy(QUIT);
-}
-
-void TestSystems::MouseMotion(SDL_Event& event) {
+void TestSystems::MouseMotion(SDL_MouseMotionEvent const& motion) {
 	//
 }
 
-void TestSystems::MouseButtonDown(SDL_Event& event) {
-	switch(event.button.button) {
+void TestSystems::MouseButtonDown(SDL_MouseButtonEvent const& button) {
+	switch(button.button) {
 		case SDL_BUTTON_LEFT:
 			if (ks[SDLK_LSHIFT]) {
 				if (pointOne == nullptr) {
-					pointOne = waypointMgr.GetNearestPoint(event.button.x, event.button.y);
+					pointOne = waypointMgr.GetNearestPoint(button.x, button.y);
 				}
 				else if (pointTwo == nullptr) {
-					pointTwo = waypointMgr.GetNearestPoint(event.button.x, event.button.y);
+					pointTwo = waypointMgr.GetNearestPoint(button.x, button.y);
 					if (pointOne == pointTwo) {
 						pointTwo = nullptr;
 					}
 				}
 			}
 			else {
-				waypointMgr.NewPoint(event.button.x, event.button.y);
+				waypointMgr.NewPoint(button.x, button.y);
 			}
 		break;
 		case SDL_BUTTON_RIGHT:
 			if (!ks[SDLK_LSHIFT]) {
-				waypointMgr.DeleteNearestPoint(event.button.x, event.button.y);
+				waypointMgr.DeleteNearestPoint(button.x, button.y);
 			}
 			pointOne = pointTwo = nullptr;
 		break;
 	}
 }
 
-void TestSystems::MouseButtonUp(SDL_Event& event) {
+void TestSystems::MouseButtonUp(SDL_MouseButtonEvent const& button) {
 	//
 }
 
-void TestSystems::KeyDown(SDL_Event& event) {
-	ks.KeyDown(event.key.keysym.sym);
-	switch(event.key.keysym.sym) {
+void TestSystems::KeyDown(SDL_KeyboardEvent const& key) {
+	ks.KeyDown(key.keysym.sym);
+	switch(key.keysym.sym) {
 		case SDLK_ESCAPE:
-			SetStrategy(QUIT);
+			SetNextScene(SceneList::QUIT);
 		break;
 		case SDLK_RETURN:
-			SetStrategy(TESTSYSTEMS);
+			SetNextScene(SceneList::TESTSYSTEMS);
 		break;
 		case SDLK_SPACE:
 			if (pointOne && pointTwo) {
@@ -128,8 +124,8 @@ void TestSystems::KeyDown(SDL_Event& event) {
 	}
 }
 
-void TestSystems::KeyUp(SDL_Event& event) {
-	ks.KeyUp(event.key.keysym.sym);
+void TestSystems::KeyUp(SDL_KeyboardEvent const& key) {
+	ks.KeyUp(key.keysym.sym);
 }
 
 void TestSystems::TestFunction(int x, int y) {

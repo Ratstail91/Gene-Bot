@@ -14,15 +14,14 @@ public:
 	virtual ~TestSystems();
 protected:
 	//frame loop
-	void UpdateObjects();
-	void Render();
+	void Update();
+	void Render(SDL_Surface* const screen);
 	//events
-	virtual void QuitEvent(SDL_Event&);
-	virtual void MouseMotion(SDL_Event&);
-	virtual void MouseButtonDown(SDL_Event&);
-	virtual void MouseButtonUp(SDL_Event&);
-	virtual void KeyDown(SDL_Event&);
-	virtual void KeyUp(SDL_Event&);
+	virtual void MouseMotion		(SDL_MouseMotionEvent const&);
+	virtual void MouseButtonDown	(SDL_MouseButtonEvent const&);
+	virtual void MouseButtonUp		(SDL_MouseButtonEvent const&);
+	virtual void KeyDown			(SDL_KeyboardEvent const&);
+	virtual void KeyUp				(SDL_KeyboardEvent const&);
 	//things being tested
 	void TestFunction(int x, int y);
 	WaypointManager waypointMgr;

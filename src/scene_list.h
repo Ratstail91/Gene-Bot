@@ -1,4 +1,4 @@
-/* File Name: main.cpp
+/* File Name: scene_list.h
  * Author: Kayne Ruse
  * Date (dd/mm/yyyy): 24/04/2013
  * Copyright: (c) Kayne Ruse 2013
@@ -23,25 +23,19 @@
  * distribution.
  *
  * Description:
- *     Entry point of the program, and handles fatal errors.
+ *     A simple enumeration of scenes used in the scene system.
 */
-#include "scene_manager.h"
+#ifndef SCENELIST_H_
+#define SCENELIST_H_
 
-#include <stdexcept>
-#include <iostream>
+enum class SceneList {
+	//these are reserved
+	QUIT,
+	CONTINUE,
+	FIRST,
 
-using namespace std;
+	//custom indexes
+	TESTSYSTEMS,
+};
 
-int main(int, char**) {
-	SceneManager app;
-	try {
-		app.Init();
-		app.Proc();
-		app.Quit();
-	}
-	catch(exception& e) {
-		cerr << "Fatal error: " << e.what() << endl;
-		return 1;
-	}
-	return 0;
-}
+#endif
