@@ -39,5 +39,8 @@ Vector2 Camera::GetPosition() const {
 }
 
 Vector2 Camera::GetCamPosition() {
-	return position * scale;
+	Vector2 ret = position;
+	ret.x -= w/2;
+	ret.y -= h/2;
+	return ret * scale;
 }

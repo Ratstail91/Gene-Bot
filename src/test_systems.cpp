@@ -39,31 +39,32 @@ TestSystems::~TestSystems() {
 
 //frame loop
 void TestSystems::Update() {
-	cout << cam.GetPosition().x << "\t" << cam.GetPosition().y << endl;
+	cout << cam.GetScale() << "\t" << cam.GetPosition().x << "\t" << cam.GetPosition().y << endl;
 }
 
 void TestSystems::Render(SDL_Surface* const screen) {
 	SDL_FillRect(screen, nullptr, 0);
 	//paths & points
+	Vector2 v = cam.GetCamPosition();
 	for (auto it : *waypointMgr.GetPathList()) {
-		lineRGBA(screen, it.one->x, it.one->y, it.two->x, it.two->y, 0, 0, 255, 255);
+		lineRGBA(screen, v.x+it.one->x, v.y+it.one->y, v.x+it.two->x, v.y+it.two->y, 0, 0, 255, 255);
 	}
 	for (auto it : *waypointMgr.GetPointList()) {
-		circleRGBA(screen, it.x, it.y, 4, 255, 0, 0, 255);
+		circleRGBA(screen, v.x+it.x, v.y+it.y, 4, 255, 0, 0, 255);
 	}
 	//nearest point to the mouse
 	int x, y;
 	SDL_GetMouseState(&x, &y);
 	Point* nearest = waypointMgr.GetNearestPoint(x, y);
 	if (nearest != nullptr) {
-		circleRGBA(screen, nearest->x, nearest->y, 8, 255, 0, 255, 255);
+		circleRGBA(screen, v.x+nearest->x, v.y+nearest->y, 8, 255, 0, 255, 255);
 	}
 	//selected points
 	if (pointOne != nullptr) {
-		circleRGBA(screen, pointOne->x, pointOne->y, 8, 0, 255, 0, 255);
+		circleRGBA(screen, v.x+pointOne->x, v.y+pointOne->y, 8, 0, 255, 0, 255);
 	}
 	if (pointTwo != nullptr) {
-		circleRGBA(screen, pointTwo->x, pointTwo->y, 8, 2, 255, 0, 255);
+		circleRGBA(screen, v.x+pointTwo->x, v.y+pointTwo->y, 8, 2, 255, 0, 255);
 	}
 }
 
@@ -71,24 +72,6 @@ void TestSystems::Render(SDL_Surface* const screen) {
 void TestSystems::MouseMotion(SDL_MouseMotionEvent const& motion) {
 	if (motion.state & SDL_BUTTON_LMASK) {
 		cam.ShiftPosition(Vector2(motion.xrel,motion.yrel));
-		return;
-	}
-	if (motion.state & SDL_BUTTON_WHEELDOWN) {
-		if (cam.GetScale() >= 6) {
-			cam.SetScale(6);
-		}
-		else {
-			cam.ShiftScale(1.2);
-		}
-		return;
-	}
-	if (motion.state & SDL_BUTTON_WHEELUP) {
-		if (cam.GetScale() <= 1) {
-			cam.SetScale(1);
-		}
-		else {
-			cam.ShiftScale(0.8);
-		}
 		return;
 	}
 }
@@ -116,6 +99,24 @@ void TestSystems::MouseButtonDown(SDL_MouseButtonEvent const& button) {
 				waypointMgr.DeleteNearestPoint(button.x, button.y);
 			}
 			pointOne = pointTwo = nullptr;
+		break;
+		case SDL_BUTTON_WHEELUP:
+			cout << "Wheel up" << endl;
+			if (cam.GetScale() >= 6) {
+				cam.SetScale(6);
+			}
+			else {
+				cam.ShiftScale(0.2);
+			}
+		break;
+		case SDL_BUTTON_WHEELDOWN:
+			cout << "wheel down" << endl;
+			if (cam.GetScale() <= 1) {
+				cam.SetScale(1);
+			}
+			else {
+				cam.ShiftScale(-.2);
+			}
 		break;
 	}
 }
