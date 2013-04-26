@@ -45,32 +45,33 @@ void TestSystems::Update() {
 void TestSystems::Render(SDL_Surface* const screen) {
 	SDL_FillRect(screen, nullptr, 0);
 	//paths & points
-	Vector2 v = cam.GetCamPosition();
+	Vector2 v = cam.GetPosition();
+	double s = cam.GetScale();
 	for (auto it : *waypointMgr.GetPathList()) {
-		lineRGBA(screen, v.x+it.one->x, v.y+it.one->y, v.x+it.two->x, v.y+it.two->y, 0, 0, 255, 255);
+		lineRGBA(screen, it.one->x*s+v.x, it.one->y*s+v.y, it.two->x*s+v.x, it.two->y*s+v.y, 0, 0, 255, 255);
 	}
 	for (auto it : *waypointMgr.GetPointList()) {
-		circleRGBA(screen, v.x+it.x, v.y+it.y, 4, 255, 0, 0, 255);
+		circleRGBA(screen, it.x*s+v.x, it.y*s+v.y, 4, 255, 0, 0, 255);
 	}
 	//nearest point to the mouse
 	int x, y;
 	SDL_GetMouseState(&x, &y);
-	Point* nearest = waypointMgr.GetNearestPoint(x, y);
+	Point* nearest = waypointMgr.GetNearestPoint(x*s+v.x, y*s+v.y);
 	if (nearest != nullptr) {
-		circleRGBA(screen, v.x+nearest->x, v.y+nearest->y, 8, 255, 0, 255, 255);
+		circleRGBA(screen, nearest->x, nearest->y, 8, 255, 0, 255, 255);
 	}
 	//selected points
 	if (pointOne != nullptr) {
-		circleRGBA(screen, v.x+pointOne->x, v.y+pointOne->y, 8, 0, 255, 0, 255);
+		circleRGBA(screen, pointOne->x, pointOne->y, 8, 0, 255, 0, 255);
 	}
 	if (pointTwo != nullptr) {
-		circleRGBA(screen, v.x+pointTwo->x, v.y+pointTwo->y, 8, 2, 255, 0, 255);
+		circleRGBA(screen, pointTwo->x, pointTwo->y, 8, 2, 255, 0, 255);
 	}
 }
 
 //events
 void TestSystems::MouseMotion(SDL_MouseMotionEvent const& motion) {
-	if (motion.state & SDL_BUTTON_LMASK) {
+	if (motion.state & SDL_BUTTON_RMASK) {
 		cam.ShiftPosition(Vector2(motion.xrel,motion.yrel));
 		return;
 	}
@@ -79,6 +80,7 @@ void TestSystems::MouseMotion(SDL_MouseMotionEvent const& motion) {
 void TestSystems::MouseButtonDown(SDL_MouseButtonEvent const& button) {
 	switch(button.button) {
 		case SDL_BUTTON_LEFT:
+			//select the two points
 			if (ks[SDLK_LSHIFT]) {
 				if (pointOne == nullptr) {
 					pointOne = waypointMgr.GetNearestPoint(button.x, button.y);

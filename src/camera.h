@@ -17,7 +17,6 @@ public:
 	Vector2 SetPosition(Vector2 v);
 	Vector2 ShiftPosition(Vector2 v);
 	Vector2 GetPosition() const;
-	Vector2 GetCamPosition();
 private:
 	int w, h;
 	Vector2 position;
